@@ -2,17 +2,22 @@
 package calculabin;
 
 public class CalculaBin {
-    // func converte int em bin 
-    // func soma 
-    // func subtrai
-    // func divide
-    // func multiplica
-    // func recebe numero float e manda matissa para as demais
     
-    public static void main(String[] args) {
-        // recebe o numero do usuario
-        // chama func e dps responde o usuario
-        System.out.println("oi");
-    }
+    // recebe o numero do usuario e verifica se eh int ou float
     
+    // se for int so manda pra converte_int, se float manda pra recebe_float
+    
+    // recebe_float : func recebe numero float, converte binario, manda matissas dos dois numeros para as demais (+,-,*,/)
+    
+    // func converte_int : converte int em bin 
+    
+    // func soma int 
+    
+    // func subtrai int
+    
+    // func divide int 
+    
+    // func multiplica int algoritmo de booth
+    
+    // retorna o resultado em binario
 }
