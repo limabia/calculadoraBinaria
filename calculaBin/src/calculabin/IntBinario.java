@@ -27,16 +27,32 @@ public class IntBinario {
     }
     
     public IntBinario soma(IntBinario outro){
-        IntBinario resultado = new IntBinario();
+        IntBinario resultadoSoma = new IntBinario();
         int sobe = 0;
         
         for (int i=numeroDeBits-1; i > 0; i--) {
             int bit1 = this.binario[i];
             int bit2 = outro.binario[i];
             int soma = bit1 + bit2 + sobe;
-            resultado.binario[i] = soma % 2;
+            resultadoSoma.binario[i] = soma % 2;
             sobe = soma / 2;
         }
-        return resultado;
+        return resultadoSoma;
+    }
+    
+    public IntBinario subtracao(IntBinario outro){
+        IntBinario complementoDeDois = new IntBinario();
+        // calcula complemento de 2 
+        // onde tem 0 coloco 1 onde tem 1 coloco 0 
+        for(int i=0; i < numeroDeBits-1; i++) {
+            if(outro.binario[i] == 1){
+                complementoDeDois.binario[i] = 0;
+            }
+            else if (outro.binario[i] == 0){
+                complementoDeDois.binario[i] = 1;
+            }
+        }
+        IntBinario resultadoSub = soma(complementoDeDois);
+        return resultadoSub;
     }
 }
