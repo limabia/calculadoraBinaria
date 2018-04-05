@@ -20,4 +20,13 @@ public class CalculaBin {
     // func multiplica int algoritmo de booth
     
     // retorna o resultado em binario
+    public static void main(String[] args) {
+        IntBinario numero1 = new IntBinario(20);
+        IntBinario numero2 = new IntBinario(4);
+        numero1.imprime();
+        numero2.imprime();
+        IntBinario resultado = numero1.soma(numero2);
+        resultado.imprime();
+        
+    }
 }
