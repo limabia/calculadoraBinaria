@@ -62,7 +62,7 @@ public class IntBinario {
         if(this.numeroDeBits < outro.numeroDeBits){  
            //se for tipo 10 / 100, vai dar numero quebrado
            //ja instanciei um float aqui pra receber esse resultado
-        floatBinario fResultadoDiv = new floatBinario();
+        FloatBinario floatDiv = new FloatBinario();
         
         return floatDiv;
         
