@@ -55,4 +55,11 @@ public class IntBinario {
         IntBinario resultadoSub = soma(complementoDeDois);
         return resultadoSub;
     }
+    
+    public IntBinario divisao(IntBinario outro, IntBinario divisor){
+    }
+    
+    public IntBinario multBooth(){
+    }
+    
 }
