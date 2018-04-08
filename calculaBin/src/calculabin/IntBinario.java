@@ -56,7 +56,20 @@ public class IntBinario {
         return resultadoSub;
     }
     
-    public IntBinario divisao(IntBinario outro, IntBinario divisor){
+    public Object divisao(IntBinario outro){   
+        IntBinario resultadoDiv = new IntBinario();
+        
+        if(this.numeroDeBits < outro.numeroDeBits){  
+           //se for tipo 10 / 100, vai dar numero quebrado
+           //ja instanciei um float aqui pra receber esse resultado
+        floatBinario fResultadoDiv = new floatBinario();
+        
+        return floatDiv;
+        
+        }
+        
+        return resultadoDiv;    
+            
     }
     
     public IntBinario multBooth(){
