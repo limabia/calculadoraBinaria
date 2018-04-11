@@ -44,7 +44,6 @@ public class IntBinario {
     
     public IntBinario subtracao(IntBinario outro){
         IntBinario complementoDeDois = new IntBinario();
-        // calcula complemento de 2 
         // onde tem 0 coloco 1 onde tem 1 coloco 0 
         for(int i=0; i < numeroDeBits-1; i++) {
             if(outro.binario[i] == 1){
@@ -54,33 +53,39 @@ public class IntBinario {
                 complementoDeDois.binario[i] = 1;
             }
         }
-        IntBinario resultadoSub = soma(complementoDeDois);
+        // calcula a soma para o complemento de dois
+        IntBinario resultadoSub = soma(complementoDeDois.soma(new IntBinario(1)));
         return resultadoSub;
     }
     
-    public Object divisao(IntBinario divisor){
-        IntBinario zero = new IntBinario(0);
-       
-        if(divisor == zero) return 0;
+    public int compara(IntBinario outro){
+        for(int i=0; i < numeroDeBits-1; i++){
+            if (outro.binario[i] != this.binario[i]){
+                return this.binario[i] - outro.binario[i];
+            }
+        }
+        // retorna 0 para divisor == dividendo
+        //  1 para dividendo maior que divisor 
+        // -1 para divisor maior que dividendo
+        return 0;
+    }
+
+    public IntBinario divisao(IntBinario divisor){
+        // ajeitar a verificacao de divisao por zero
+        
+        // tem que retornar o quociente e o resto da divisao
+        IntBinario quociente = new IntBinario();
+        IntBinario resto = new IntBinario();
+        
+        int verificador = compara(divisor);
+        System.out.println(verificador);       
         
         IntBinario resultadoDiv = new IntBinario();
         
-        if(this.numeroDeBits < divisor.numeroDeBits){  
-            // o numero de bits sempre vai ser igual pq eh um atribuito de tamanho fixo da classe
-            // deveria contar o numero de zeros no inicio do vetor pra descobrir isso que vc quer bb
-            
-            //Se for tipo 10/100 vai dar num quebrado
-            //Aqui vamos chamar o metodo de div float, mas ainda nao ta pronto
-            FloatBinario floatDiv = new FloatBinario();
-        
-            return floatDiv;
-        }
-          
-        return resultadoDiv;    
+        return resultadoDiv; 
     }
     
     public IntBinario multBooth(){
         return this;
-    }
-    
+    } 
 }
