@@ -2,12 +2,14 @@ package calculabin;
 
 public class IntBinario {
     final int numeroDeBits = 32; 
-    protected int[] binario = new int[numeroDeBits];
-    // sempre o primeiro bit vai ser o bit de sinal
+    // lembrar que sempre o primeiro bit vai ser o bit de sinal (1 para negativo, 0 para positivo)
+    protected int[] binario = new int[numeroDeBits];    
     
+    // construtor padrao da classe
     public IntBinario(){
     }
     
+    // construtor que converte um int para a forma binaria
     public IntBinario(Integer numero) {
         String strNum = Integer.toBinaryString(numero);
         for (int x=1; x <= strNum.length(); x++) {
@@ -63,7 +65,10 @@ public class IntBinario {
         
         IntBinario resultadoDiv = new IntBinario();
         
-        if(binario.numeroDeBits < divisor.numeroDeBits){
+        if(this.numeroDeBits < divisor.numeroDeBits){  
+            // o numero de bits sempre vai ser igual pq eh um atribuito de tamanho fixo da classe
+            // deveria contar o numero de zeros no inicio do vetor pra descobrir isso que vc quer bb
+            
             //Se for tipo 10/100 vai dar num quebrado
             //Aqui vamos chamar o metodo de div float, mas ainda nao ta pronto
             FloatBinario floatDiv = new FloatBinario();
@@ -75,6 +80,7 @@ public class IntBinario {
     }
     
     public IntBinario multBooth(){
+        return this;
     }
     
 }
