@@ -68,10 +68,18 @@ public class IntBinario {
     }
 
     public IntBinario divisao(IntBinario divisor) {
-        
-        for(int i=0; i < numeroDeBits; i++) {
-        }// ajeitar a verificacao de divisao por zero
-        
+       
+        int contaZeros;
+        for(int i=0; i < numeroDeBits; i++) { //não vale pra 0 com sinal negativo ??
+            while(binario[i] == 0){
+               contaZeros++;
+               if(contaZeros == numeroDeBits){
+                   System.out.println("A divisão por zero não é possível. Tente outra operação.");
+                   System(exit); //podemos instituir um retorno de erro pra esse caso, sem ser uma exceção e sem fechar o programa rsrs
+                }
+            }
+        }// ajeitar a verificacao de divisao por zero (ok)
+               
         // tem que retornar o quociente e o resto da divisao
         IntBinario dividendo = this;
         IntBinario quociente = new IntBinario();
