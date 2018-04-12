@@ -71,7 +71,7 @@ public class IntBinario {
        
         int contaZeros;
         for(int i=0; i < numeroDeBits; i++) { //não vale pra 0 com sinal negativo ??
-            while(binario[i] == 0){
+            while(divisor.binario[i] == 0){
                contaZeros++;
                if(contaZeros == numeroDeBits){
                    System.out.println("A divisão por zero não é possível. Tente outra operação.");
