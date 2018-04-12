@@ -28,10 +28,9 @@ public class IntBinario {
         System.out.println();
     }
     
-    public IntBinario soma(IntBinario outro){
+    public IntBinario soma(IntBinario outro) {
         IntBinario resultadoSoma = new IntBinario();
         int sobe = 0;
-        
         for (int i=numeroDeBits-1; i > 0; i--) {
             int bit1 = this.binario[i];
             int bit2 = outro.binario[i];
@@ -45,35 +44,36 @@ public class IntBinario {
     public IntBinario subtracao(IntBinario outro){
         IntBinario complementoDeDois = new IntBinario();
         // onde tem 0 coloco 1 onde tem 1 coloco 0 
-        for(int i=0; i < numeroDeBits-1; i++) {
-            if(outro.binario[i] == 1){
+        for(int i=0; i < numeroDeBits; i++) {
+            if(outro.binario[i] == 1) {
                 complementoDeDois.binario[i] = 0;
             }
-            else if (outro.binario[i] == 0){
+            else if (outro.binario[i] == 0) {
                 complementoDeDois.binario[i] = 1;
             }
         }
-        // calcula a soma para o complemento de dois
-        IntBinario resultadoSub = soma(complementoDeDois.soma(new IntBinario(1)));
+        complementoDeDois = complementoDeDois.soma(new IntBinario(1));
+        IntBinario resultadoSub = this.soma(complementoDeDois);
         return resultadoSub;
     }
     
-    public int compara(IntBinario outro){
-        for(int i=0; i < numeroDeBits-1; i++){
+    public int compara(IntBinario outro) {
+        for(int i=0; i < numeroDeBits; i++){
             if (outro.binario[i] != this.binario[i]){
                 return this.binario[i] - outro.binario[i];
             }
         }
-        // retorna 0 para divisor == dividendo
-        //  1 para dividendo maior que divisor 
-        // -1 para divisor maior que dividendo
+        // retorna 0 para divisor == dividendo,  1 para dividendo maior que divisor, -1 para divisor maior que dividendo
         return 0;
     }
 
-    public IntBinario divisao(IntBinario divisor){
-        // ajeitar a verificacao de divisao por zero
+    public IntBinario divisao(IntBinario divisor) {
+        
+        for(int i=0; i < numeroDeBits; i++) {
+        }// ajeitar a verificacao de divisao por zero
         
         // tem que retornar o quociente e o resto da divisao
+        IntBinario dividendo = this;
         IntBinario quociente = new IntBinario();
         IntBinario resto = new IntBinario();
         
@@ -81,6 +81,18 @@ public class IntBinario {
         System.out.println(verificador);       
         
         IntBinario resultadoDiv = new IntBinario();
+        
+        if(verificador == -1) {
+        // divisor maior que dividendo
+        }
+        else if(verificador == 1) {
+        // dividendo maior que divisor
+        // pra esse caso: ir subtraindo o divisor do dividendo e ver quantas vezes coube
+        // incrementar no resultadoDiv
+        }
+        else if(verificador == 0) {
+        // dividendo e divisor iguais
+        }
         
         return resultadoDiv; 
     }

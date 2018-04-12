@@ -24,9 +24,12 @@ public class CalculaBin {
     public static void main(String[] args) {
         IntBinario numero1 = new IntBinario(20);
         IntBinario numero2 = new IntBinario(4);
-        numero1.imprime();
-        numero2.imprime();
+        // numero1.imprime();
+        // numero2.imprime();
         IntBinario resultado = numero1.soma(numero2);
-        resultado.imprime();
+        // resultado.imprime();
+        IntBinario prova = resultado.subtracao(numero2);
+        // prova.imprime();
+        numero2.divisao(prova);
     }
 }
