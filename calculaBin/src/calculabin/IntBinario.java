@@ -86,17 +86,20 @@ public class IntBinario {
         if(dividendo.ehZero())  
             return dividendo;
             
-        
         // tem que retornar o quociente e o resto da divisao
 
         IntBinario quociente = new IntBinario(0);
-        IntBinario resto = new IntBinario();
-                
-            while(!dividendo.subtracao(divisor).ehNegativo()){
+        IntBinario resto = dividendo;
+            
+        while(!(dividendo.subtracao(divisor)) .ehNegativo()){
                 quociente = quociente.soma(new IntBinario(1));
-                dividendo = dividendo.subtracao(divisor);
-            } 
-            return quociente;   //Blz para divisão exata
+                dividendo = dividendo.subtracao(divisor);   
+                
+                resto = resto.subtracao(divisor);
+      
+        }
+        return quociente;   //Blz para divisão de positivos  
+    }
     
     public IntBinario multBooth(){
         return this;
