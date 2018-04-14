@@ -1,15 +1,7 @@
 package calculabin;
 
 public class IntBinario {
-    final int numeroDeBits = 32; 
-    // lembrar que sempre o primeiro bit vai ser o bit de sinal (1 para negativo, 0 para positivo)
-    protected int[] binario = new int[numeroDeBits];    
-    
-    // construtor padrao da classe
-    public IntBinario(){
-    }
-    
-    // construtor que converte um int para a forma binaria
+   
     public IntBinario(Integer numero) {
         String strNum = Integer.toBinaryString(numero);
         for (int x=1; x <= strNum.length(); x++) {
@@ -17,8 +9,15 @@ public class IntBinario {
         }
     }
     
+    final int numeroDeBits = 32; 
+    protected int[] binario = new int[numeroDeBits];    // sempre o primeiro bit vai ser o de sinal
+    public int contaZeros = 0;   
+    
+    public IntBinario(){
+    }
+    
     public boolean ehNegativo() {
-        return this.binario[1] == 1;  //alterei apenas para testes de divisao
+        return this.binario[1] == 1;
     }
     
     public boolean ehZero(){
@@ -28,7 +27,7 @@ public class IntBinario {
         }
         return false;
     }
-    
+   
     public void imprime(){
         for(int i=0; i < numeroDeBits; i++) {
             System.out.printf("%d", this.binario[i]);
@@ -36,17 +35,55 @@ public class IntBinario {
         System.out.println();
     }
     
-    public IntBinario soma(IntBinario outro) {
+    public int compara(IntBinario outro) {
+        for(int i=0; i < numeroDeBits; i++){
+            if (outro.binario[i] != this.binario[i]){
+                return this.binario[i] - outro.binario[i];
+            }
+        }
+        // retorna 0 para divisor == dividendo,  1 para this maior que outro, -1 para divisor maior que dividendo
+        return 0;
+    }
+    public IntBinario soma(IntBinario outro){
         IntBinario resultadoSoma = new IntBinario();
         int sobe = 0;
+        
+        if(this.ehNegativo() && outro.ehNegativo()){
+            resultadoSoma.binario[0] = 1;
+            
+            for (int i= numeroDeBits-1; i > 0; i--) {
+            int bit1 = this.binario[i];
+            int bit2 = outro.binario[i];
+            int soma = bit1 + bit2 + sobe;
+            
+            resultadoSoma.binario[i] = soma % 2;
+            sobe = soma / 2;
+        }
+            return resultadoSoma;
+        }           
+        
+        /*else if (!outro.ehNegativo() && this.ehNegativo()){
+         
+            //resultadoSoma = this.subtracao(outro);
+            
+            if(this.compara(outro) == 1)
+                resultadoSoma.binario[0] = this.binario[0];
+            else
+                resultadoSoma.binario[0] = outro.binario[0];
+            return resultadoSoma;
+        }
+        */       
+        
         for (int i=numeroDeBits-1; i > 0; i--) {
             int bit1 = this.binario[i];
             int bit2 = outro.binario[i];
             int soma = bit1 + bit2 + sobe;
             resultadoSoma.binario[i] = soma % 2;
             sobe = soma / 2;
+            
         }
         return resultadoSoma;
+     
     }
     
     public IntBinario subtracao(IntBinario outro){
@@ -65,15 +102,7 @@ public class IntBinario {
         return resultadoSub;
     }
     
-    public int compara(IntBinario outro) {
-        for(int i=0; i < numeroDeBits; i++){
-            if (outro.binario[i] != this.binario[i]){
-                return this.binario[i] - outro.binario[i];
-            }
-        }
-        // retorna 0 para divisor == dividendo,  1 para dividendo maior que divisor, -1 para divisor maior que dividendo
-        return 0;
-    }
+    
 
     public IntBinario divisao(IntBinario divisor) {
         
@@ -90,17 +119,30 @@ public class IntBinario {
 
         IntBinario quociente = new IntBinario(0);
         IntBinario resto = dividendo;
-            
-        while(!(dividendo.subtracao(divisor)) .ehNegativo()){
+        
+        //divindo numeros positivos:
+        if(!dividendo.ehNegativo() && !divisor.ehNegativo()){    
+            while(!(dividendo.subtracao(divisor)) .ehNegativo()){
                 quociente = quociente.soma(new IntBinario(1));
                 dividendo = dividendo.subtracao(divisor);   
                 
                 resto = resto.subtracao(divisor);
       
-        }
-        return quociente;   //Blz para divisão de positivos  
+            }
+        }   else{
+            
+            while((dividendo.soma(divisor)) .ehNegativo() || dividendo.soma(divisor) .ehZero()){
+                quociente = quociente.soma(new IntBinario(1));
+                dividendo = dividendo.soma(divisor);   
+                dividendo.imprime();
+                resto = resto.soma(divisor);
+            }
+        } 
+        System.out.print("Resto da divisão: ");
+            resto.imprime();
+            return quociente;   //Blz para divisão exata
     }
-    
+}
     public IntBinario multBooth(){
         return this;
     } 
