@@ -18,7 +18,15 @@ public class IntBinario {
     }
     
     public boolean ehNegativo() {
-        return this.binario[0] == 1;
+        return this.binario[1] == 1;  //alterei apenas para testes de divisao
+    }
+    
+    public boolean ehZero(){
+        for(int i=0; i < 32; i++){
+            if(this.binario[i] == 0)  contaZeros++;
+            if(contaZeros == numeroDeBits)  return true;
+        }
+        return false;
     }
     
     public void imprime(){
@@ -68,41 +76,27 @@ public class IntBinario {
     }
 
     public IntBinario divisao(IntBinario divisor) {
-       
-        int contaZeros = 0;
-        for(int i=0; i < 32; i++) { //não vale pra 0 com sinal negativo ??
-            if(divisor.binario[i] == 0){
-               contaZeros++;
-            }
-             if(contaZeros == numeroDeBits){
-                System.out.println("A divisão por zero não é possível. Tente outra operação.");
-            }
-        }   // ajeitar a verificacao de divisao por zero (ok)
-               
-        // tem que retornar o quociente e o resto da divisao
+        
+        IntBinario resultadoDiv;
         IntBinario dividendo = this;
-        IntBinario quociente = new IntBinario();
+         
+        if(divisor.ehZero())    
+            System.out.println("A divisão por zero não é permitida aqui."); //bloqueia divisao por 0 (ok)
+        
+        if(dividendo.ehZero())  
+            return dividendo;
+            
+        
+        // tem que retornar o quociente e o resto da divisao
+
+        IntBinario quociente = new IntBinario(0);
         IntBinario resto = new IntBinario();
-        
-        int verificador = compara(divisor);
-        System.out.println(verificador);       
-        
-        IntBinario resultadoDiv = new IntBinario();
-        
-        if(verificador == -1) {
-        // divisor maior que dividendo
-        }
-        else if(verificador == 1) {
-        // dividendo maior que divisor
-        // pra esse caso: ir subtraindo o divisor do dividendo e ver quantas vezes coube
-        // incrementar no resultadoDiv
-        }
-        else if(verificador == 0) {
-        // dividendo e divisor iguais
-        }
-        
-        return resultadoDiv; 
-    }
+                
+            while(!dividendo.subtracao(divisor).ehNegativo()){
+                quociente = quociente.soma(new IntBinario(1));
+                dividendo = dividendo.subtracao(divisor);
+            } 
+            return quociente;   //Blz para divisão exata
     
     public IntBinario multBooth(){
         return this;
