@@ -145,10 +145,11 @@ public class IntBinario {
 }
     public IntBinario deslocaDireita(){
         IntBinario deslocado = new IntBinario();
-        this.imprime();
-        for(int i = 0; i < numeroDeBits; i++){
-            deslocado.binario[i] = this.binario[i+1]; 
+        //this.imprime();
+        for(int i = 32; i > numeroDeBits+1; i--){
+            deslocado.binario[i] = this.binario[i-1]; 
         }
+            //deslocado.binario[32] = 0;
         deslocado.imprime();
         return deslocado;
     }
