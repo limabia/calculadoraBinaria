@@ -143,7 +143,43 @@ public class IntBinario {
             return quociente;   //Blz para divisão exata
     }
 }
-    public IntBinario multBooth(){
-        return this;
+    public IntBinario deslocaDireita(){
+        IntBinario deslocado = new IntBinario();
+        this.imprime();
+        for(int i = 0; i < numeroDeBits; i++){
+            deslocado.binario[i] = this.binario[i+1]; 
+        }
+        deslocado.imprime();
+        return deslocado;
+    }
+    
+    public IntBinario multiplicacao(IntBinario multiplicador){
+    //utilizando algoritmo de Booth:
+    IntBinario resultadoMult = multiplicador;
+    
+    IntBinario y = multiplicador;
+    IntBinario x = this;
+    
+    // 0 x qualquer coisa == 0
+    if(multiplicador.ehZero()) return multiplicador;
+    if(this.ehZero()) return this;
+       
+    int ultimo = this.binario[31];
+    int penultimo = this.binario[30];
+    
+    for(int i = 0; i < this.numeroDeBits; i++){
+    
+        if(penultimo == 0 && ultimo == 1){
+            // P termina em [0 1] -> P = P + A
+            resultadoMult = resultadoMult.soma(this);
+        }
+        else if(penultimo == 1 && ultimo == 0){
+            // P termina en [1 0] -> P = P + S = P - A
+            resultadoMult = resultadoMult.subtracao(this);
+        }
+    }        
+    resultadoMult.deslocaDireita();
+    
+    return resultadoMult;
     } 
 }
