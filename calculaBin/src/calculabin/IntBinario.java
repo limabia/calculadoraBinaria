@@ -147,17 +147,17 @@ public class IntBinario {
         return deslocado;
     }
     
-    public IntBinario deslocaDireita(){
+        public IntBinario deslocaDireita(){
         IntBinario deslocado = new IntBinario();
         System.out.print("a ser deslocado: ");
         this.imprime();
-        for(int i = 32; i > numeroDeBits+1; i--){
-            for(int j = 31; j > numeroDeBits; j--)
-            deslocado.binario[i] = this.binario[i-1]; 
-        }
-            //deslocado.binario[32] = 0;
-        System.out.print("numero deslocado: ");
+        for(int i = 31; i > numeroDeBits+1; i--){
+            for(int j = 30; j > numeroDeBits; j--)
+            deslocado.binario[i] = this.binario[j]; 
+            System.out.print("numero deslocado: ");
         deslocado.imprime();
+        }
+       deslocado.binario[31] = 0;
         return deslocado;
     }
     
@@ -181,7 +181,7 @@ public class IntBinario {
             System.out.println(contaZeros); //debug
         }
 
-        for(int i = contaZeros; i < multiplicador.numeroDeBits; i++){
+        for(int i = contaZeros; i <= multiplicador.numeroDeBits; i++){
 
             if(penultimo == 0 && ultimo == 1){
                 // P termina em [0 1] -> P = P + A
@@ -196,8 +196,7 @@ public class IntBinario {
                 System.out.print("seg resultadoMult: ");
                 resultadoMult.imprime();
             resultadoMult.deslocaDireita();
-        
-               
+ 
     }        
         
     return resultadoMult;
