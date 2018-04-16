@@ -13,6 +13,7 @@ public class IntBinario {
     protected int[] binario = new int[numeroDeBits];    // sempre o primeiro bit vai ser o de sinal
     public int contaZeros = 0;   
     
+    // construtor padrao
     public IntBinario(){
     }
     
@@ -35,6 +36,22 @@ public class IntBinario {
         System.out.println();
     }
     
+    public int paraInt(){
+        IntBinario bin = this;
+        String sinal = "";
+        
+        if(this.ehNegativo()){
+            bin = this.complementoDeDois();
+            sinal = "-";
+        }
+        
+        String stringBin = new String();
+        for(int i=0; i < numeroDeBits; i++) {
+            stringBin += bin.binario[i];
+        }
+        return Integer.parseInt(sinal + stringBin, 2);
+    }
+    
     public int compara(IntBinario outro) {
         for(int i=0; i < numeroDeBits; i++){
             if (outro.binario[i] != this.binario[i]){
@@ -44,37 +61,12 @@ public class IntBinario {
         // retorna 0 para divisor == dividendo,  1 para this maior que outro, -1 para divisor maior que dividendo
         return 0;
     }
+    
     public IntBinario soma(IntBinario outro){
         IntBinario resultadoSoma = new IntBinario();
         int sobe = 0;
-        
-        if(this.ehNegativo() && outro.ehNegativo()){
-            resultadoSoma.binario[0] = 1;
-            
-            for (int i= numeroDeBits-1; i > 0; i--) {
-            int bit1 = this.binario[i];
-            int bit2 = outro.binario[i];
-            int soma = bit1 + bit2 + sobe;
-            
-            resultadoSoma.binario[i] = soma % 2;
-            sobe = soma / 2;
-        }
-            return resultadoSoma;
-        }           
-        
-        /*else if (!outro.ehNegativo() && this.ehNegativo()){
          
-            //resultadoSoma = this.subtracao(outro);
-            
-            if(this.compara(outro) == 1)
-                resultadoSoma.binario[0] = this.binario[0];
-            else
-                resultadoSoma.binario[0] = outro.binario[0];
-            return resultadoSoma;
-        }
-        */       
-        
-        for (int i=numeroDeBits-1; i > 0; i--) {
+        for (int i=numeroDeBits-1; i >= 0; i--) {
             int bit1 = this.binario[i];
             int bit2 = outro.binario[i];
             int soma = bit1 + bit2 + sobe;
@@ -83,27 +75,28 @@ public class IntBinario {
             
         }
         return resultadoSoma;
-     
     }
     
-    public IntBinario subtracao(IntBinario outro){
+    public IntBinario complementoDeDois(){
         IntBinario complementoDeDois = new IntBinario();
         // onde tem 0 coloco 1 onde tem 1 coloco 0 
         for(int i=0; i < numeroDeBits; i++) {
-            if(outro.binario[i] == 1) {
+            if(this.binario[i] == 1) {
                 complementoDeDois.binario[i] = 0;
             }
-            else if (outro.binario[i] == 0) {
+            else if (this.binario[i] == 0) {
                 complementoDeDois.binario[i] = 1;
             }
         }
         complementoDeDois = complementoDeDois.soma(new IntBinario(1));
-        IntBinario resultadoSub = this.soma(complementoDeDois);
+        return complementoDeDois;
+    }
+    
+    public IntBinario subtracao(IntBinario outro){
+        IntBinario resultadoSub = this.soma(outro.complementoDeDois());
         return resultadoSub;
     }
     
-    
-
     public IntBinario divisao(IntBinario divisor) {
         
         IntBinario resultadoDiv;
