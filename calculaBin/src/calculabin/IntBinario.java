@@ -18,7 +18,7 @@ public class IntBinario {
     }
     
     public boolean ehNegativo() {
-        return this.binario[1] == 1;
+        return this.binario[0] == 1;
     }
     
     public boolean ehZero(){
@@ -77,7 +77,7 @@ public class IntBinario {
         return resultadoSoma;
     }
     
-    public IntBinario complementoDeDois(){
+    public IntBinario complementoDeDois() {
         IntBinario complementoDeDois = new IntBinario();
         // onde tem 0 coloco 1 onde tem 1 coloco 0 
         for(int i=0; i < numeroDeBits; i++) {
@@ -97,65 +97,46 @@ public class IntBinario {
         return resultadoSub;
     }
     
-    public IntBinario divisao(IntBinario divisor) {
-        IntBinario resultadoDiv;
+    public IntBinario[] divisao(IntBinario divisor) {
         IntBinario dividendo = this;
          
         if(divisor.ehZero())    
-            System.out.println("A divisão por zero não é permitida aqui."); //bloqueia divisao por 0 (ok)
-        
-        if(dividendo.ehZero())  
-            return dividendo;
-       
-        // tem que retornar o quociente e o resto da divisao
+            throw new IllegalArgumentException("Nao eh possivel dividir por zero");
+
         IntBinario quociente = new IntBinario(0);
         IntBinario resto = dividendo;
         
-        //divindo numeros positivos:
-        if(!dividendo.ehNegativo() && !divisor.ehNegativo()){    
-            while(!(dividendo.subtracao(divisor)) .ehNegativo()){
-                quociente = quociente.soma(new IntBinario(1));
-                dividendo = dividendo.subtracao(divisor);   
-                
-                resto = resto.subtracao(divisor);
-      
-            }
-        }   else{
-            
-            while((dividendo.soma(divisor)) .ehNegativo() || dividendo.soma(divisor) .ehZero()){
-                quociente = quociente.soma(new IntBinario(1));
-                dividendo = dividendo.soma(divisor);   
-                dividendo.imprime();
-                resto = resto.soma(divisor);
-            }
-        } 
-        System.out.print("Resto da divisão: ");
-            resto.imprime();
-            return quociente;   //Blz para divisão exata
+        boolean dividendoNeg = false, divisorNeg = false;
+        if (resto.ehNegativo()) {    
+            dividendoNeg = true;
+            resto = resto.complementoDeDois();
+        }
+        if (divisor.ehNegativo()) {
+            divisorNeg = true;
+            divisor = divisor.complementoDeDois();
+        }
+        
+        while ((resto.subtracao(divisor)).ehNegativo()) {
+            quociente = quociente.soma(new IntBinario(1));
+            resto = resto.subtracao(divisor);
+        }
+        
+        // casos onde a divisao eh por um numero negativo ou o dividendo eh negativo o quociente deve ser tbm
+        if (dividendoNeg ^ divisorNeg) {
+            quociente.binario[0] = 1;
+        }
+        
+        // VERIFICAR o que precisa fazer com o resto da divisao por inteiros 
+        // se eh pra exibir ou nao pro usuario
+        return new IntBinario[] {quociente, resto};
     }
-}
+
     public IntBinario deslocaDireita(){
         IntBinario deslocado = new IntBinario();
-        //this.imprime();
-        for(int i = 32; i > numeroDeBits+1; i--){
+        for(int i = numeroDeBits; i > 0; i--){
             deslocado.binario[i] = this.binario[i-1]; 
         }
-            //deslocado.binario[32] = 0;
         deslocado.imprime();
-        return deslocado;
-    }
-    
-        public IntBinario deslocaDireita(){
-        IntBinario deslocado = new IntBinario();
-        System.out.print("a ser deslocado: ");
-        this.imprime();
-        for(int i = 31; i > numeroDeBits+1; i--){
-            for(int j = 30; j > numeroDeBits; j--)
-            deslocado.binario[i] = this.binario[j]; 
-            System.out.print("numero deslocado: ");
-        deslocado.imprime();
-        }
-       deslocado.binario[31] = 0;
         return deslocado;
     }
     
@@ -194,9 +175,7 @@ public class IntBinario {
                 System.out.print("seg resultadoMult: ");
                 resultadoMult.imprime();
             resultadoMult.deslocaDireita();
- 
-    }        
-        
+        }        
     return resultadoMult;
     } 
 }

@@ -92,7 +92,17 @@ public class CalculaBin {
     
     
     public static void main(String[] args) {
-        testeSoma();
-        testeSubtracao();
+        // testeSoma();
+        // testeSubtracao();
+        
+        IntBinario num1 = new IntBinario(100);
+        IntBinario num2 = new IntBinario(10);
+        IntBinario result[] = num1.divisao(num2);
+        result[0].imprime();
+        result[1].imprime();
+        int quociente = result[0].paraInt();
+        int resto = result[1].paraInt();
+        System.out.println(quociente);
+        System.out.println(resto);
     }
 }
