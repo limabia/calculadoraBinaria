@@ -3,8 +3,8 @@ package calculabin;
 
 public class CalculaBin {
 
-    public static void main(String[] args) {
-        // soma de dois inteiros positivos
+    public static void testeSoma() {
+    // soma de dois inteiros positivos
         IntBinario pos1 = new IntBinario(37);
         IntBinario pos2 = new IntBinario(61);
         int result1 = pos1.soma(pos2).paraInt();
@@ -40,7 +40,9 @@ public class CalculaBin {
         } else {
             System.out.println(resu2);
         }
-        
+    }
+    
+    public static void testeSubtracao() {
         // subtracao de dois inteiros positivos que resulta positivo
         IntBinario sub1 = new IntBinario(61);
         IntBinario sub2 = new IntBinario(37);
@@ -86,5 +88,11 @@ public class CalculaBin {
         } else {
             System.out.println(rst2);
         }
+    }
+    
+    
+    public static void main(String[] args) {
+        testeSoma();
+        testeSubtracao();
     }
 }

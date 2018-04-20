@@ -98,7 +98,6 @@ public class IntBinario {
     }
     
     public IntBinario divisao(IntBinario divisor) {
-        
         IntBinario resultadoDiv;
         IntBinario dividendo = this;
          
@@ -107,9 +106,8 @@ public class IntBinario {
         
         if(dividendo.ehZero())  
             return dividendo;
-            
+       
         // tem que retornar o quociente e o resto da divisao
-
         IntBinario quociente = new IntBinario(0);
         IntBinario resto = dividendo;
         
