@@ -95,8 +95,8 @@ public class CalculaBin {
         // testeSoma();
         // testeSubtracao();
         
-        IntBinario num1 = new IntBinario(100);
-        IntBinario num2 = new IntBinario(10);
+        IntBinario num1 = new IntBinario(-81);
+        IntBinario num2 = new IntBinario(9);
         IntBinario result[] = num1.divisao(num2);
         result[0].imprime();
         result[1].imprime();

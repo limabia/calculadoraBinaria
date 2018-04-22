@@ -116,14 +116,14 @@ public class IntBinario {
             divisor = divisor.complementoDeDois();
         }
         
-        while ((resto.subtracao(divisor)).ehNegativo()) {
+        while (!(resto.subtracao(divisor)).ehNegativo()) {
             quociente = quociente.soma(new IntBinario(1));
             resto = resto.subtracao(divisor);
         }
         
         // casos onde a divisao eh por um numero negativo ou o dividendo eh negativo o quociente deve ser tbm
         if (dividendoNeg ^ divisorNeg) {
-            quociente.binario[0] = 1;
+            quociente = quociente.complementoDeDois();
         }
         
         // VERIFICAR o que precisa fazer com o resto da divisao por inteiros 
