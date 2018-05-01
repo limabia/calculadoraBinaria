@@ -18,6 +18,12 @@ public class BinUtils {
         bin[0] = 0;
     }
     
+    public static void deslocaEsquerda(int bin[]) {
+        for(int i=0; i<bin.length-1; i++)
+            bin[i] = bin[i+1];
+        bin[bin.length-1] = 0;
+    }
+    
     public static int[] soma(int bin1[], int bin2[]) {
         int numeroDeBits = bin1.length;
         int resultado[] = new int[numeroDeBits];
@@ -64,5 +70,23 @@ public class BinUtils {
         }
         
         return complementoDeDois;
+    }
+    
+    public static int[] subtrai(int bin1[], int bin2[]) {
+        return soma(bin1, complementoDeDois(bin2));
+    }
+    
+    public static int compara(int a[], int b[], int inicio) {
+        for (int i=inicio; i < a.length; i++) {
+            if (a[i] != b[i]) {
+                return a[i] - b[i];
+            }
+        }
+
+        return 0;
+    }
+    
+    public static int compara(int a[], int b[]) {
+        return compara(a, b, 0);
     }
 }
