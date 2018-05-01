@@ -4,7 +4,7 @@ package calculabin;
 public class CalculaBin {
 
     public static void testeSoma() {
-    // soma de dois inteiros positivos
+        // soma de dois inteiros positivos
         IntBinario pos1 = new IntBinario(37);
         IntBinario pos2 = new IntBinario(61);
         int result1 = pos1.soma(pos2).paraInt();
@@ -40,6 +40,11 @@ public class CalculaBin {
         } else {
             System.out.println(resu2);
         }
+        // soma dos dois maiores inteiros positivos 
+        // soma dos dois menores inteiros positivos 
+        // soma dos dois maiores inteiros negativos 
+        // soma dos dois menores inteiros negativos 
+        // soma o maior inteiro positivo com o menor inteiro negativo
     }
     
     public static void testeSubtracao() {
@@ -88,6 +93,11 @@ public class CalculaBin {
         } else {
             System.out.println(rst2);
         }
+        
+        // subtracao dos dois maiores inteiros positivos 
+        // subtracao dos dois menores inteiros positivos 
+        // subtracao dos dois maiores inteiros negativos 
+        // subtracao dos dois menores inteiros negativos 
     }
     
     
@@ -95,11 +105,10 @@ public class CalculaBin {
         // testeSoma();
         // testeSubtracao();
         
-        IntBinario num1 = new IntBinario(-81);
-        IntBinario num2 = new IntBinario(9);
+        
+        IntBinario num1 = new IntBinario(8);
+        IntBinario num2 = new IntBinario(10);
         IntBinario result[] = num1.divisao(num2);
-        result[0].imprime();
-        result[1].imprime();
         int quociente = result[0].paraInt();
         int resto = result[1].paraInt();
         System.out.println(quociente);
