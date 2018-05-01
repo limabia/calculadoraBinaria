@@ -1,6 +1,7 @@
 
 package calculabin;
 
+
 public class CalculaBin {
 
     public static void testeSoma() {
@@ -106,12 +107,18 @@ public class CalculaBin {
         // testeSubtracao();
         
         
-        IntBinario num1 = new IntBinario(8);
-        IntBinario num2 = new IntBinario(10);
-        IntBinario result[] = num1.divisao(num2);
-        int quociente = result[0].paraInt();
-        int resto = result[1].paraInt();
-        System.out.println(quociente);
-        System.out.println(resto);
+//        IntBinario num1 = new IntBinario(8);
+//        IntBinario num2 = new IntBinario(10);
+//        IntBinario result[] = num1.divisao(num2);
+//        int quociente = result[0].paraInt();
+//        int resto = result[1].paraInt();
+//        System.out.println(quociente);
+//        System.out.println(resto);
+//        
+        
+        FloatBinario f1 = new FloatBinario(2.0f);
+        FloatBinario f2 = new FloatBinario(1.0f);
+        FloatBinario r = f1.subtracao(f2);
+        System.out.println(r.paraFloat());
     }
 }
