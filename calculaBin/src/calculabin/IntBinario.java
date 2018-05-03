@@ -131,51 +131,55 @@ public class IntBinario {
         return new IntBinario[] {quociente, resto};
     }
 
-    public IntBinario deslocaDireita(){
-        IntBinario deslocado = new IntBinario();
-        for(int i = numeroDeBits; i > 0; i--){
+public IntBinario deslocaDireita(){
+        IntBinario deslocado = this;
+
+        deslocado.binario[0] = 0;
+        
+        for(int i = numeroDeBits-2; i > 0; i--){
             deslocado.binario[i] = this.binario[i-1]; 
         }
+        
+        System.out.println("numero deslocado: ");
         deslocado.imprime();
         return deslocado;
     }
     
     public IntBinario multiplicacao(IntBinario multiplicador){
     //utilizando algoritmo de Booth:
-        IntBinario resultadoMult = multiplicador;
-        IntBinario A = this;
-        IntBinario S = this.complementoDeDois();
-        contaZeros = 0;
-        System.out.println("debug1");    
-        int ultimo = this.binario[31];
-        int penultimo = this.binario[30];
+        IntBinario resultadoMult = new IntBinario(0); //A
+        IntBinario M = this;
+        IntBinario Q = multiplicador;
 
-        System.out.println("ultimo: " + ultimo + "  penultimo: " + penultimo);  
-        System.out.print("prim resultadoMult: ");
-        resultadoMult.imprime();
+        int contador = 32;
 
-        for(int i = 0; i < multiplicador.numeroDeBits-1; i++){
-            if(multiplicador.binario[i] == 0) contaZeros++;
-            else break;
-            System.out.println(contaZeros); //debug
+        int bitAux = 0;
+        int ultimo = bitAux;
+        int penultimo = Q.binario[31];
+
+        while(contador > 0){
+            //debug:
+            System.out.println("A: ");resultadoMult.imprime();
+            System.out.print("Q: ");Q.imprime();
+            System.out.print("M: ");M.imprime();
+            System.out.println("Qaux: " + bitAux); 
+            System.out.println("penultimo: " + penultimo + "    ultimo: " + ultimo); //debug
+            
+            if(ultimo == 1 && penultimo == 0){
+                resultadoMult = resultadoMult.soma(M);
+            }
+            else if(ultimo == 0 && penultimo == 1){
+                resultadoMult = resultadoMult.subtracao(M);
+            }
+            
+            bitAux = Q.binario[numeroDeBits-1];
+            Q = Q.deslocaDireita();
+
+            penultimo = Q.binario[numeroDeBits-2];
+
+            contador--;
         }
-
-        for(int i = contaZeros; i <= multiplicador.numeroDeBits; i++){
-
-            if(penultimo == 0 && ultimo == 1){
-                // P termina em [0 1] -> P = P + A
-                resultadoMult = resultadoMult.soma(this);
-                System.out.println("debug2");
-            }
-            else if(penultimo == 1 && ultimo == 0){
-                // P termina en [1 0] -> P = P + S = P - A
-                resultadoMult = resultadoMult.subtracao(this);
-                System.out.println("debug3");
-            }
-                System.out.print("seg resultadoMult: ");
-                resultadoMult.imprime();
-            resultadoMult.deslocaDireita();
-        }        
+        //resultadoMult = resultadoMult.deslocaDireita();
     return resultadoMult;
     } 
 }
