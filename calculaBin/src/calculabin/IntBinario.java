@@ -1,6 +1,6 @@
 package calculabin;
 
-public class IntBinario {
+public class IntBinario implements Numero<IntBinario> {
    
     public IntBinario(Integer numero) {
         String strNum = Integer.toBinaryString(numero);
@@ -182,4 +182,9 @@ public IntBinario deslocaDireita(){
         //resultadoMult = resultadoMult.deslocaDireita();
     return resultadoMult;
     } 
+
+    @Override
+    public String paraStringDecimal() {
+        return String.valueOf(this.paraInt());
+    }
 }

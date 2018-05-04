@@ -1,6 +1,6 @@
 package calculabin;
 
-public class FloatBinario {
+public class FloatBinario implements Numero<FloatBinario> {
 
     final int numeroDeBits = 32;
     final int bitsExpoente = 8;
@@ -170,7 +170,7 @@ public class FloatBinario {
         return true;
     }
 
-    public FloatBinario divisao(FloatBinario divisor) { 
+    public FloatBinario[] divisao(FloatBinario divisor) { 
         FloatBinario dividendo = this;
 
         if (divisor.ehZero()) {
@@ -223,7 +223,7 @@ public class FloatBinario {
         // seta o sinal
         resultado.binario[0] = sinal;
         
-        return resultado;
+        return new FloatBinario[] {resultado};
     }
 
     private void setExpoente(int expoente) {
@@ -231,5 +231,10 @@ public class FloatBinario {
         for (int i = 1; i <= bitsExpoente; i++) {
             this.binario[i] = expoenteBin[i - 1];
         }
+    }
+    
+    @Override
+    public String paraStringDecimal() {
+        return String.valueOf(this.paraFloat());
     }
 }

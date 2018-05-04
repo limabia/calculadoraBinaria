@@ -2,8 +2,102 @@ package calculabin;
 
 public class CalculaBinUI extends javax.swing.JFrame {
 
+    private enum Modo {
+        INTEIRO, FLOAT;
+    }
+
+    private enum Operacao {
+        SOMA, SUBTRACAO, MULTIPLICACAO, DIVISAO;
+    }
+
+    private Numero num1, num2;
+    private Operacao operacao;
+    private Modo modo = Modo.INTEIRO;
+    private boolean clear = false;
+
     public CalculaBinUI() {
         initComponents();
+    }
+
+    private Numero converteNumero(String valor) {
+        if ("".equals(valor)) {
+            return null;
+        }
+
+        if (modo == Modo.INTEIRO) {
+            return new IntBinario(Integer.parseInt(valor));
+        } else {
+            return new FloatBinario(Float.parseFloat(valor));
+        }
+    }
+
+    private void limpaMemoria() {
+        tela.setText("");
+        num1 = null;
+        num2 = null;
+        operacao = null;
+    }
+
+    private void trocaModo() {
+        limpaMemoria();
+        
+        if (modo == Modo.INTEIRO) {
+            modo = Modo.FLOAT;
+            virgula.setEnabled(true);
+            modoButton.setText("Modo Inteiro");
+        } else {
+            modo = Modo.INTEIRO;
+            virgula.setEnabled(false);
+            modoButton.setText("Modo Ponto Fluante");
+        }
+    }
+
+    private void executa() {
+        Numero resultado;
+
+        try {
+            if (operacao != null) {
+                switch (operacao) {
+                    case SOMA:
+                        resultado = num1.soma(num2);
+                        break;
+                    case SUBTRACAO:
+                        resultado = num1.subtracao(num2);
+                        break;
+                    case DIVISAO:
+                        resultado = num1.divisao(num2)[0];
+                        break;
+                    case MULTIPLICACAO:
+                        resultado = num1.multiplicacao(num2);
+                        break;
+                    default:
+                        resultado = num2;
+                }
+                tela.setText(resultado.paraStringDecimal());
+            } else {
+                resultado = num2;
+            }
+
+            num1 = resultado;
+            num2 = null;
+            operacao = null;
+        } catch (IllegalArgumentException e) {
+            limpaMemoria();
+            tela.setText("ERRO");
+        }
+
+        clear = true;
+    }
+
+    void escreveDigito(String digito) {
+        // limpa a tela apos realizar uma operacao
+        if (clear) {
+            tela.setText("");
+            clear = false;
+        }
+
+        String valor = tela.getText() + digito;
+        tela.setText(valor);
     }
 
     @SuppressWarnings("unchecked")
@@ -31,6 +125,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
         divisao = new javax.swing.JButton();
         apagar = new javax.swing.JButton();
         sair = new javax.swing.JButton();
+        modoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -39,6 +134,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
             }
         });
 
+        tela.setEditable(false);
         jScrollPane1.setViewportView(tela);
 
         tres.setText("3");
@@ -52,11 +148,6 @@ public class CalculaBinUI extends javax.swing.JFrame {
         um.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 umMouseClicked(evt);
-            }
-        });
-        um.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                umActionPerformed(evt);
             }
         });
 
@@ -131,6 +222,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
         });
 
         virgula.setText(".");
+        virgula.setEnabled(false);
         virgula.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 virgulaMouseClicked(evt);
@@ -141,11 +233,6 @@ public class CalculaBinUI extends javax.swing.JFrame {
         start.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 startMouseClicked(evt);
-            }
-        });
-        start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startActionPerformed(evt);
             }
         });
 
@@ -184,63 +271,78 @@ public class CalculaBinUI extends javax.swing.JFrame {
             }
         });
 
+        modoButton.setText("Modo Ponto Fluante");
+        modoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(um, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(quatro, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(cinco, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(seis, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(subtracao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(dois, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(tres, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(soma, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(zero, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(virgula, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(divisao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(sair, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(igual, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(sete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(oito, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(nove, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(multiplicacao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(apagar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(sete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(oito, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nove, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(multiplicacao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(apagar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(um, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(quatro, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(cinco, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(seis, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(subtracao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(dois, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tres, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(soma, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(zero, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(virgula, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(start, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(divisao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(sair, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                    .addComponent(igual, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))))
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(modoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(modoButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -276,66 +378,48 @@ public class CalculaBinUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_startActionPerformed
-
-    private void umActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_umActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_umActionPerformed
-
     private void umMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_umMouseClicked
-        String valor = tela.getText() + um.getText();
-        tela.setText(valor);
+        escreveDigito("1");
     }//GEN-LAST:event_umMouseClicked
 
     private void doisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doisMouseClicked
-         String valor = tela.getText() + dois.getText();
-        tela.setText(valor); 
+        escreveDigito("2");
     }//GEN-LAST:event_doisMouseClicked
 
     private void tresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tresMouseClicked
-        String valor = tela.getText() + tres.getText();
-        tela.setText(valor);
+        escreveDigito("3");
     }//GEN-LAST:event_tresMouseClicked
 
     private void quatroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quatroMouseClicked
-        String valor = tela.getText() + quatro.getText();
-        tela.setText(valor); 
+        escreveDigito("4");
     }//GEN-LAST:event_quatroMouseClicked
 
     private void cincoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cincoMouseClicked
-       String valor = tela.getText() + cinco.getText();
-       tela.setText(valor);
+        escreveDigito("5");
     }//GEN-LAST:event_cincoMouseClicked
 
     private void seisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seisMouseClicked
-        String valor = tela.getText() + seis.getText();
-        tela.setText(valor); 
+        escreveDigito("6");
     }//GEN-LAST:event_seisMouseClicked
 
     private void seteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seteMouseClicked
-        String valor = tela.getText() + sete.getText();
-        tela.setText(valor); 
+        escreveDigito("7");
     }//GEN-LAST:event_seteMouseClicked
 
     private void oitoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_oitoMouseClicked
-        String valor = tela.getText() + oito.getText();
-        tela.setText(valor); 
+        escreveDigito("8");
     }//GEN-LAST:event_oitoMouseClicked
 
     private void noveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noveMouseClicked
-        String valor = tela.getText() + nove.getText();
-        tela.setText(valor); 
+        escreveDigito("9");
     }//GEN-LAST:event_noveMouseClicked
 
     private void zeroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_zeroMouseClicked
-        String valor = tela.getText() + zero.getText();
-        tela.setText(valor);
+        escreveDigito("0");
     }//GEN-LAST:event_zeroMouseClicked
 
     private void startMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseClicked
-        tela.setText("");
+        limpaMemoria();
     }//GEN-LAST:event_startMouseClicked
 
     private void sairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sairMouseClicked
@@ -343,31 +427,33 @@ public class CalculaBinUI extends javax.swing.JFrame {
     }//GEN-LAST:event_sairMouseClicked
 
     private void igualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_igualMouseClicked
-        String conta = tela.getText();
-        System.out.println(">>>"+conta);
-        // TODO enviar calculo para o calcula bin e retornar resultado
-        String resultado = "resultado = 0";
-        tela.setText(resultado);
+        num2 = converteNumero(tela.getText());
+        executa();
+        operacao = null;
     }//GEN-LAST:event_igualMouseClicked
 
     private void somaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_somaMouseClicked
-       String valor = tela.getText() + soma.getText();
-        tela.setText(valor);
+        num2 = converteNumero(tela.getText());
+        executa();
+        operacao = Operacao.SOMA;
     }//GEN-LAST:event_somaMouseClicked
 
     private void subtracaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subtracaoMouseClicked
-        String valor = tela.getText() + subtracao.getText();
-        tela.setText(valor);
+        num2 = converteNumero(tela.getText());
+        executa();
+        operacao = Operacao.SUBTRACAO;
     }//GEN-LAST:event_subtracaoMouseClicked
 
     private void multiplicacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_multiplicacaoMouseClicked
-        String valor = tela.getText() + multiplicacao.getText();
-        tela.setText(valor);
+        num2 = converteNumero(tela.getText());
+        executa();
+        operacao = Operacao.MULTIPLICACAO;
     }//GEN-LAST:event_multiplicacaoMouseClicked
 
     private void divisaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_divisaoMouseClicked
-        String valor = tela.getText() + divisao.getText();
-        tela.setText(valor);
+        num2 = converteNumero(tela.getText());
+        executa();
+        operacao = Operacao.DIVISAO;
     }//GEN-LAST:event_divisaoMouseClicked
 
     private void apagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_apagarMouseClicked
@@ -375,13 +461,16 @@ public class CalculaBinUI extends javax.swing.JFrame {
     }//GEN-LAST:event_apagarMouseClicked
 
     private void virgulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_virgulaMouseClicked
-        String valor = tela.getText() + virgula.getText();
-        tela.setText(valor);
+        escreveDigito(".");
     }//GEN-LAST:event_virgulaMouseClicked
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         System.out.println(evt);
     }//GEN-LAST:event_formKeyPressed
+
+    private void modoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modoButtonActionPerformed
+        trocaModo();
+    }//GEN-LAST:event_modoButtonActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -416,7 +505,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton apagar;
@@ -425,6 +514,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
     private javax.swing.JButton dois;
     private javax.swing.JButton igual;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton modoButton;
     private javax.swing.JButton multiplicacao;
     private javax.swing.JButton nove;
     private javax.swing.JButton oito;

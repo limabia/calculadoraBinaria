@@ -119,7 +119,7 @@ public class CalculaBin {
         FloatBinario f1 = new FloatBinario(91.34375f);
         FloatBinario f2 = new FloatBinario(0.14453125f);
         
-        FloatBinario r = f1.divisao(f2);
+        FloatBinario r = f1.divisao(f2)[0];
         System.out.println(r.paraFloat());
         r.imprime();
     }
