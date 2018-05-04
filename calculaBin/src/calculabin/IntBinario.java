@@ -1,7 +1,7 @@
 package calculabin;
 
 public class IntBinario implements Numero<IntBinario> {
-   
+ 
     public IntBinario(Integer numero) {
         String strNum = Integer.toBinaryString(numero);
         for (int x=1; x <= strNum.length(); x++) {
@@ -11,8 +11,7 @@ public class IntBinario implements Numero<IntBinario> {
     
     final int numeroDeBits = 32; 
     protected int[] binario = new int[numeroDeBits];    // sempre o primeiro bit vai ser o de sinal
-    public int contaZeros = 0;   
-    
+        
     // construtor padrao
     public IntBinario(){
     }
@@ -22,10 +21,10 @@ public class IntBinario implements Numero<IntBinario> {
     }
     
     public boolean ehZero(){
-        for(int i=0; i < 32; i++){
-            if(this.binario[i] == 0)  contaZeros++;
-            if(contaZeros == numeroDeBits)  return true;
-        }
+        for(int i=0; i < numeroDeBits; i++){
+            if (this.binario[i] == 0) 
+                return true;
+        }  
         return false;
     }
    
@@ -135,17 +134,12 @@ public IntBinario deslocaDireita(){
        
         for(int i = numeroDeBits-1; i > 0; i--){
             deslocado.binario[i] = this.binario[i-1];
-        }
-
-        System.out.println("numero deslocado: ");
-        deslocado.imprime();
-        
+        }       
         return deslocado;
     }
     
     public IntBinario multiplicacao(IntBinario multiplicador){
-    //utilizando algoritmo de Booth:
-        IntBinario Um = new IntBinario(1);
+    //utilizando o algoritmo de Booth:
         IntBinario A = new IntBinario(0);
         IntBinario M = this;
         IntBinario Q = multiplicador;
@@ -167,16 +161,15 @@ public IntBinario deslocaDireita(){
             Q = Q.deslocaDireita();
             Q.binario[0] = A.binario[numeroDeBits-1];
             A = A.deslocaDireita();
-            
             contador--;
         }
     
-        if(A.soma(Q).ehNegativo()) return A.soma(Q).soma(Um);
-
+        if(A.soma(Q).ehNegativo()) 
+            return A.soma(Q).soma(new IntBinario(1));
+        
         return A.soma(Q);
     } 
 
-    @Override
     public String paraStringDecimal() {
         return String.valueOf(this.paraInt());
     }
