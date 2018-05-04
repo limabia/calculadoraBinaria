@@ -130,57 +130,50 @@ public class IntBinario implements Numero<IntBinario> {
         // se eh pra exibir ou nao pro usuario
         return new IntBinario[] {quociente, resto};
     }
-
 public IntBinario deslocaDireita(){
         IntBinario deslocado = this;
-
-        deslocado.binario[0] = 0;
-        
-        for(int i = numeroDeBits-2; i > 0; i--){
-            deslocado.binario[i] = this.binario[i-1]; 
+       
+        for(int i = numeroDeBits-1; i > 0; i--){
+            deslocado.binario[i] = this.binario[i-1];
         }
-        
+
         System.out.println("numero deslocado: ");
         deslocado.imprime();
+        
         return deslocado;
     }
     
     public IntBinario multiplicacao(IntBinario multiplicador){
     //utilizando algoritmo de Booth:
-        IntBinario resultadoMult = new IntBinario(0); //A
+        IntBinario Um = new IntBinario(1);
+        IntBinario A = new IntBinario(0);
         IntBinario M = this;
         IntBinario Q = multiplicador;
-
-        int contador = 32;
-
         int bitAux = 0;
-        int ultimo = bitAux;
-        int penultimo = Q.binario[31];
-
+        int contador = numeroDeBits;
+   
         while(contador > 0){
-            //debug:
-            System.out.println("A: ");resultadoMult.imprime();
-            System.out.print("Q: ");Q.imprime();
-            System.out.print("M: ");M.imprime();
-            System.out.println("Qaux: " + bitAux); 
-            System.out.println("penultimo: " + penultimo + "    ultimo: " + ultimo); //debug
-            
+            int ultimo = bitAux;
+            int penultimo = Q.binario[numeroDeBits-1];
+                   
             if(ultimo == 1 && penultimo == 0){
-                resultadoMult = resultadoMult.soma(M);
+                A = A.soma(M);    
             }
             else if(ultimo == 0 && penultimo == 1){
-                resultadoMult = resultadoMult.subtracao(M);
+                A = A.subtracao(M); 
             }
             
             bitAux = Q.binario[numeroDeBits-1];
             Q = Q.deslocaDireita();
-
-            penultimo = Q.binario[numeroDeBits-2];
-
+            Q.binario[0] = A.binario[numeroDeBits-1];
+            A = A.deslocaDireita();
+            
             contador--;
         }
-        //resultadoMult = resultadoMult.deslocaDireita();
-    return resultadoMult;
+    
+        if(A.soma(Q).ehNegativo()) return A.soma(Q).soma(Um);
+
+        return A.soma(Q);
     } 
 
     @Override
