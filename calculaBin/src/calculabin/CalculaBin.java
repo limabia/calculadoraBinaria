@@ -7,9 +7,9 @@ import static calculabin.TestaInt.*;
 public class CalculaBin { 
     
     public static void main(String[] args) {
-        testeSoma();
+        //testeSoma();
         // testeSubtracao();
-
+          testeMultiplicacao();
 //        IntBinario num1 = new IntBinario(8);
 //        IntBinario num2 = new IntBinario(10);
 //        IntBinario result[] = num1.divisao(num2);

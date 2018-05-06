@@ -1,15 +1,16 @@
 package calculabin;
 
 public class CalculaBinUI extends javax.swing.JFrame {
-
+    
+    // modos da calculadora
     private enum Modo {
         INTEIRO, FLOAT;
     }
-
+    // operacoes possiveis de serem realizadas
     private enum Operacao {
         SOMA, SUBTRACAO, MULTIPLICACAO, DIVISAO;
     }
-
+    // funcionalidades basicas e numeros de entrada
     private Numero num1, num2;
     private Operacao operacao;
     private Modo modo = Modo.INTEIRO;
@@ -19,6 +20,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
         initComponents();
     }
 
+    // transforma o valor digitado em int ou em float de acordo com o modo escolhido
     private Numero converteNumero(String valor) {
         if ("".equals(valor)) {
             return null;
@@ -31,6 +33,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
         }
     }
 
+    // limpa a memoria da calculadora
     private void limpaMemoria() {
         tela.setText("");
         num1 = null;
@@ -38,6 +41,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
         operacao = null;
     }
 
+    // para trocar de operacoes com int para operacoes com float
     private void trocaModo() {
         limpaMemoria();
         

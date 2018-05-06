@@ -92,7 +92,6 @@ public class TestaInt {
         }
     } 
     
-    
     public static void testeSubtracao() {
         // subtracao de dois inteiros positivos que resulta positivo
         IntBinario sub1 = new IntBinario(61);
@@ -178,7 +177,266 @@ public class TestaInt {
         }
     }
     
+    public static void testaDivisao() {
+        int quociente;
+        int resto;
+        // dois inteiros positivos iguais
+        IntBinario um1 = new IntBinario(100);
+        IntBinario um2 = new IntBinario(100);
+        quociente = um1.divisao(um2)[0].paraInt();
+        resto = um1.divisao(um2)[1].paraInt();
+        if (quociente == 1 && resto == 0){
+            System.out.println("acerto - divisao dois inteiros positivos iguais");
+        } else {
+            System.out.println("1. quociente: "+ quociente + " resto: " + resto);
+        }
+        // Inteiro positivo dividido por inteiro positivo divisor de entrada 1
+        IntBinario dois1 = new IntBinario(100);
+        IntBinario dois2 = new IntBinario(10);
+        quociente = dois1.divisao(dois2)[0].paraInt();
+        resto = dois1.divisao(dois2)[1].paraInt();
+        if (quociente == 10 && resto == 0){
+            System.out.println("acerto - divisao de inteiro positivo dividido por inteiro positivo divisor");
+        } else {
+            System.out.println("1. quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // Inteiro positivo dividido por inteiro positivo divisor de entrada 1
+        IntBinario tres1 = new IntBinario(100);
+        IntBinario tres2 = new IntBinario(3);
+        quociente = tres1.divisao(tres2)[0].paraInt();
+        resto = tres1.divisao(tres2)[1].paraInt();
+        if (quociente == 33 && resto == 1){
+            System.out.println("acerto - divisao de inteiro positivo dividido por inteiro positivo nao divisor");
+        } else {
+            System.out.println("1. quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // Inteiro positivo dividido por inteiro positivo por zero
+        IntBinario quatro1 = new IntBinario(100);
+        IntBinario quatro2 = new IntBinario(0);
+        try {
+            quociente = quatro1.divisao(quatro2)[0].paraInt();
+        } catch (IllegalArgumentException e) {
+           System.out.println("acerto - divisao de inteiro positivo dividido por zero"); 
+        }
+        
+        // Inteiro positivo dividido por inteiro negativo
+        IntBinario seis1 = new IntBinario(100);
+        IntBinario seis2 = new IntBinario(-3);
+        quociente = seis1.divisao(seis2)[0].paraInt();
+        resto = seis1.divisao(seis2)[1].paraInt();
+        if (quociente == -33 && resto == 1){
+            System.out.println("acerto - divisao de Inteiro positivo dividido por inteiro negativo");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // dois inteiros negativos iguais
+        IntBinario sete1 = new IntBinario(-100);
+        IntBinario sete2 = new IntBinario(-100);
+        quociente = sete1.divisao(sete2)[0].paraInt();
+        resto = sete1.divisao(sete2)[1].paraInt();
+        if (quociente == 1 && resto == 0){
+            System.out.println("acerto - divisao dois inteiros negativos iguais");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // inteiro negativo e inteiro negativo divisor de entrada 1
+        IntBinario oito1 = new IntBinario(-100);
+        IntBinario oito2 = new IntBinario(-10);
+        quociente = oito1.divisao(oito2)[0].paraInt();
+        resto = oito1.divisao(oito2)[1].paraInt();
+        if (quociente == 10 && resto == 0){
+            System.out.println("acerto - divisao de inteiro negativo e inteiro negativo divisor de entrada 1");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // inteiro negativo e inteiro negativo nao divisor de entrada 1
+        IntBinario nove1 = new IntBinario(-100);
+        IntBinario nove2 = new IntBinario(-3);
+        quociente = nove1.divisao(nove2)[0].paraInt();
+        resto = nove1.divisao(nove2)[1].paraInt();
+        if (quociente == 33 && resto == 1){
+            System.out.println("acerto - divisao de inteiro negativo e inteiro negativo nao divisor de entrada 1");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // Inteiro negativo dividido por inteiro positivo por zero
+        IntBinario dez1 = new IntBinario(100);
+        IntBinario dez2 = new IntBinario(0);
+        try {
+            quociente = dez1.divisao(dez2)[0].paraInt();
+        } catch (IllegalArgumentException e) {
+           System.out.println("acerto - divisao de inteiro negativo dividido por zero"); 
+        }
+        
+        // inteiros positivos muito grandes iguais
+        IntBinario onze1 = new IntBinario(2144748364);
+        IntBinario onze2 = new IntBinario(2144748364);
+        quociente = onze1.divisao(onze2)[0].paraInt();
+        resto = onze1.divisao(onze2)[1].paraInt();
+        if (quociente == 1 && resto == 0){
+            System.out.println("acerto - inteiros positivos muito grandes iguais");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // menores inteiros positivos
+        IntBinario doze1 = new IntBinario(0);
+        IntBinario doze2 = new IntBinario(0);
+        try {
+            quociente = doze1.divisao(doze2)[0].paraInt();
+        } catch (IllegalArgumentException e) {
+           System.out.println("acerto - menores inteiros positivos (0 e 0)"); 
+        }
+        
+        // maiores inteiros negativos
+        IntBinario treze1 = new IntBinario(-1);
+        IntBinario treze2 = new IntBinario(-1);
+        quociente = treze1.divisao(treze2)[0].paraInt();
+        resto = treze1.divisao(treze2)[1].paraInt();
+        if (quociente == 1 && resto == 0){
+            System.out.println("acerto - maiores inteiros negativos");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // maiores inteiros negativos
+        IntBinario quatorze1 = new IntBinario(2144748364);
+        IntBinario quatorze2 = new IntBinario(-2144748364);
+        quociente = quatorze1.divisao(quatorze2)[0].paraInt();
+        resto = quatorze1.divisao(quatorze2)[1].paraInt();
+        if (quociente == -1 && resto == 0){
+            System.out.println("acerto - maiores inteiros negativos");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // menor positivo com maior negativo
+        IntBinario quinze1 = new IntBinario(0);
+        IntBinario quinze2 = new IntBinario(-1);
+        quociente = quinze1.divisao(quinze2)[0].paraInt();
+        resto = quinze1.divisao(quinze2)[1].paraInt();
+        if (quociente == 0 && resto == 0){
+            System.out.println("acerto - menor positivo com maior negativo");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+        
+        // inteiro negativo mt pequeno inteiro positivo muito grande
+        IntBinario dezesseis1 = new IntBinario(-2144748364);
+        IntBinario dezesseis2 = new IntBinario(2144748364);
+        quociente = dezesseis1.divisao(dezesseis2)[0].paraInt();
+        resto = dezesseis1.divisao(dezesseis2)[1].paraInt();
+        if (quociente == -1 && resto == 0){
+            System.out.println("acerto - inteiro negativo mt pequeno inteiro positivo muito grande");
+        } else {
+            System.out.println("quociente: "+ quociente + " resto: " + resto);
+        }
+    }
     
-    public static void testeMultiplicacao() {}
-    public static void testaDivisao() {}
+    public static void testeMultiplicacao() { 
+        // multiplicacao de dois inteiros positivos
+        IntBinario um1 = new IntBinario(100);
+        IntBinario um2 = new IntBinario(100);
+        result = um1.multiplicacao(um2).paraInt();
+        if (result == 10000){
+            System.out.println("acerto - multiplicacao de dois inteiros positivos");
+        } else {
+            System.out.println(result);
+        }
+        
+        // multiplicacao inteiro positivo e de inteiro negativo
+        IntBinario dois1 = new IntBinario(100);
+        IntBinario dois2 = new IntBinario(-100);
+        result = dois1.multiplicacao(dois2).paraInt();
+        if (result == -10000){
+            System.out.println("acerto - multiplicacao inteiro positivo e de inteiro negativo");
+        } else {
+            System.out.println(result);
+        }
+        
+        // multiplicacao de inteiro positivo e zero
+        IntBinario tres1 = new IntBinario(100);
+        IntBinario tres2 = new IntBinario(0);
+        result = tres1.multiplicacao(tres2).paraInt();
+        if (result == 0){
+            System.out.println("acerto - multiplicacao de inteiro positivo e zero");
+        } else {
+            System.out.println(result);
+        }
+        
+        // multiplicacao inteiro positivo e inteiro negativo
+        IntBinario quatro1 = new IntBinario(100);
+        IntBinario quatro2 = new IntBinario(-100);
+        result = quatro1.multiplicacao(quatro2).paraInt();
+        if (result == -10000){
+            System.out.println("acerto - multiplicacao inteiro positivo e inteiro negativo");
+        } else {
+            System.out.println(result);
+        }
+        
+        // multiplicacao de inteiro negativo por zero
+        IntBinario cinco1 = new IntBinario(-100);
+        IntBinario cinco2 = new IntBinario(0);
+        result = cinco1.multiplicacao(cinco2).paraInt();
+        if (result == 0){
+            System.out.println("acerto - multiplicacao de inteiro negativo por zero");
+        } else {
+            System.out.println(result);
+        }
+        
+        // multiplicacao de inteiro negativo por inteiro negativo
+        IntBinario seis1 = new IntBinario(-100);
+        IntBinario seis2 = new IntBinario(-100);
+        result = seis1.multiplicacao(seis2).paraInt();
+        if (result == 10000){
+            System.out.println("acerto - multiplicacao de inteiro negativo por inteiro negativo");
+        } else {
+            System.out.println(result);
+        }
+        
+        // dois inteiro positivo muito grande
+        IntBinario sete1 = new IntBinario(2144748364);
+        IntBinario sete2 = new IntBinario(2144748364);
+        try {
+            result = sete1.multiplicacao(sete2).paraInt();
+        } catch (IllegalArgumentException e) {
+           System.out.println("acerto - multiplicacao de dois inteiro positivo muito grande"); 
+        }
+        
+        // dois menores inteiros positivos 
+        IntBinario oito1 = new IntBinario(0);
+        IntBinario oito2 = new IntBinario(0);
+        result = oito1.multiplicacao(oito2).paraInt();
+        if (result == 0){
+            System.out.println("acerto - multiplicacao de dois menores inteiros positivos");
+        } else {
+            System.out.println(result);
+        }
+        
+        // dois maiores inteiros negativos
+        IntBinario nove1 = new IntBinario(-1);
+        IntBinario nove2 = new IntBinario(-1);
+        result = nove1.multiplicacao(nove2).paraInt();
+        if (result == 1){
+            System.out.println("acerto - multiplicacao de dois maiores inteiros negativos");
+        } else {
+            System.out.println(result);
+        }
+        
+        // dois maiores inteiros negativos
+        IntBinario dez1 = new IntBinario(-2144748364);
+        IntBinario dez2 = new IntBinario(-2144748364);
+        result = dez1.multiplicacao(dez2).paraInt();
+        try {
+            result = dez1.multiplicacao(dez2).paraInt();
+        } catch (IllegalArgumentException e) {
+           System.out.println("acerto - multiplicacao de dois maiores inteiros negativos"); 
+        }
+    }
 }

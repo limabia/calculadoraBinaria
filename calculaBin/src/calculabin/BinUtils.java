@@ -128,8 +128,8 @@ public class BinUtils {
         System.arraycopy(num2, 0, q, 0, numeroDeBits);
         int bitAux = 0;
         
-        imprime(a);
-        imprime(q);
+        // imprime(a);
+        // imprime(q);
         for (int contador = numeroDeBits; contador > 0; contador--) {
             int ultimo = bitAux;
             int penultimo = q[numeroDeBits - 1];
