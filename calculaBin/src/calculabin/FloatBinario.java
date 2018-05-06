@@ -55,8 +55,8 @@ public class FloatBinario implements Numero<FloatBinario> {
 
     public int sinal() {
         return this.binario[0];
-    }    
-    
+    }
+
     public int[] mantissa() {
         int[] mantissa = new int[bitsMantissa + 2];
 
@@ -160,17 +160,66 @@ public class FloatBinario implements Numero<FloatBinario> {
     }
 
     public FloatBinario multiplicacao(FloatBinario outro) {
-        return new FloatBinario(this.paraFloat() + outro.paraFloat());
+        FloatBinario resultado = new FloatBinario();
+
+        if (this.ehZero() || outro.ehZero()) {
+            return resultado;
+        }
+
+        int sinal = this.sinal() ^ outro.sinal();
+
+        int exp;
+        int produto[] = new int[bitsMantissa];
+        int m1[] = new int[numeroDeBits];
+        int m2[] = new int[numeroDeBits];
+
+        // armazena as mantissas em 32 bits
+        System.arraycopy(this.binario, inicioMantissa, m1, 2, bitsMantissa);
+        System.arraycopy(outro.binario, inicioMantissa, m2, 2, bitsMantissa);
+
+        // seta o 1 implicito
+        m1[1] = 1;
+        m2[1] = 1;
+
+        // mantissa = m1*m2
+        produto = BinUtils.multiplica(m1, m2);
+        BinUtils.imprime(produto);
+
+        exp = this.expoente() + outro.expoente() - bias + 3;
+
+        // normalizar        
+        int iMantissa = 0;
+        while (iMantissa < bitsMantissa && produto[iMantissa] == 0) {
+            iMantissa++;
+            exp--;
+        }
+        iMantissa++;
+        System.out.println("iMantissa: " + iMantissa);
+
+        // copia a mantissa
+        System.arraycopy(produto, iMantissa, resultado.binario, inicioMantissa, bitsMantissa - iMantissa);
+
+        // seta o expoente
+        resultado.setExpoente(exp);
+
+        // seta o sinal
+        resultado.binario[0] = sinal;
+        System.out.println("resultado:");
+        resultado.imprime();
+        return resultado;
+
     }
 
     public boolean ehZero() {
-        for (int i = 1; i < numeroDeBits; i++)
-            if (this.binario[i] == 1)
+        for (int i = 1; i < numeroDeBits; i++) {
+            if (this.binario[i] == 1) {
                 return false;
+            }
+        }
         return true;
     }
 
-    public FloatBinario[] divisao(FloatBinario divisor) { 
+    public FloatBinario[] divisao(FloatBinario divisor) {
         FloatBinario dividendo = this;
 
         if (divisor.ehZero()) {
@@ -178,22 +227,22 @@ public class FloatBinario implements Numero<FloatBinario> {
         }
 
         int sinal = dividendo.sinal() ^ divisor.sinal();
-        
+
         int exp;
         int quociente[] = new int[bitsMantissa];
         int m1[] = new int[numeroDeBits];
         int m2[] = new int[numeroDeBits];
-                
+
         // armazena as mantissas em 32 bits
         System.arraycopy(dividendo.binario, inicioMantissa, m1, inicioMantissa, bitsMantissa);
         System.arraycopy(divisor.binario, inicioMantissa, m2, inicioMantissa, bitsMantissa);
-        
+
         // seta o 1 implicito
-        m1[inicioMantissa-1] = 1;
-        m2[inicioMantissa-1] = 1;
-        
+        m1[inicioMantissa - 1] = 1;
+        m2[inicioMantissa - 1] = 1;
+
         // mantissa = m1/m2
-        for (int i=0; i<bitsMantissa; i++) {
+        for (int i = 0; i < bitsMantissa; i++) {
             if (BinUtils.compara(m1, m2) < 0) {
                 quociente[i] = 0;
             } else {
@@ -202,9 +251,9 @@ public class FloatBinario implements Numero<FloatBinario> {
             }
             BinUtils.deslocaEsquerda(m1);
         }
-        
+
         exp = dividendo.expoente() - divisor.expoente();
-        
+
         // normalizar        
         int iMantissa = 0;
         while (iMantissa < bitsMantissa && quociente[iMantissa] == 0) {
@@ -212,18 +261,18 @@ public class FloatBinario implements Numero<FloatBinario> {
             exp--;
         }
         iMantissa++;
-        
+
         FloatBinario resultado = new FloatBinario();
         // copia a mantissa
-        System.arraycopy(quociente, iMantissa, resultado.binario, inicioMantissa, bitsMantissa-iMantissa);
-        
+        System.arraycopy(quociente, iMantissa, resultado.binario, inicioMantissa, bitsMantissa - iMantissa);
+
         // seta o expoente
         resultado.setExpoente(exp + bias);
-        
+
         // seta o sinal
         resultado.binario[0] = sinal;
-        
-        return new FloatBinario[] {resultado};
+
+        return new FloatBinario[]{resultado};
     }
 
     private void setExpoente(int expoente) {
@@ -232,7 +281,7 @@ public class FloatBinario implements Numero<FloatBinario> {
             this.binario[i] = expoenteBin[i - 1];
         }
     }
-    
+
     @Override
     public String paraStringDecimal() {
         return String.valueOf(this.paraFloat());
