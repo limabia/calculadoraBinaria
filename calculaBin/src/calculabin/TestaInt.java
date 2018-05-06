@@ -2,8 +2,9 @@ package calculabin;
 
 public class TestaInt {
     
+    public static int result;
+            
     public static void testeSoma() {
-        int result;
         // soma de dois inteiros positivos
         IntBinario pos1 = new IntBinario(37);
         IntBinario pos2 = new IntBinario(61);
@@ -132,17 +133,49 @@ public class TestaInt {
         // subtracao de um inteiro negativo e  um inteiro positivos
         IntBinario sbIn1 = new IntBinario(-37);
         IntBinario sbIp2 = new IntBinario(61);
-        int rst2 = sbIn1.subtracao(sbIp2).paraInt();
-        if (rst2 == -98){
+        result = sbIn1.subtracao(sbIp2).paraInt();
+        if (result == -98){
             System.out.println("acerto - subtracao de um inteiro negativo e  um inteiro positivo");
         } else {
-            System.out.println(rst2);
+            System.out.println(result);
         }
         
-        // subtracao dos dois maiores inteiros positivos 
+        // subtracao dos dois maiores inteiros positivos
+        IntBinario sbMai1 = new IntBinario(2144748364);
+        IntBinario sbMai2 = new IntBinario(2144748364);
+        result = sbMai1.subtracao(sbMai2).paraInt();
+        if (result == 0){
+            System.out.println("acerto - subtracao dos dois maiores inteiros positivos");
+        } else {
+            System.out.println(result);
+        }
         // subtracao dos dois menores inteiros positivos 
+        IntBinario sbImen1 = new IntBinario(0);
+        IntBinario sbImen2 = new IntBinario(0);
+        result = sbImen1.subtracao(sbImen2).paraInt();
+        if (result == 0){
+            System.out.println("acerto - subtracao dos dois menores inteiros positivos");
+        } else {
+            System.out.println(result);
+        }
         // subtracao dos dois maiores inteiros negativos 
+        IntBinario sbInM1 = new IntBinario(-1);
+        IntBinario sbIpM2 = new IntBinario(-1);
+        result = sbInM1.subtracao(sbIpM2).paraInt();
+        if (result == 0){
+            System.out.println("acerto - subtracao dos dois maiores inteiros negativos");
+        } else {
+            System.out.println(result);
+        }
         // subtracao dos dois menores inteiros negativos 
+        IntBinario sbInMen1 = new IntBinario(-2144748364);
+        IntBinario sbinMen2 = new IntBinario(-2144748364);
+        result = sbInMen1.subtracao(sbinMen2).paraInt();
+        if (result == 0){
+            System.out.println("acerto - subtracao dos dois menores inteiros negativos");
+        } else {
+            System.out.println(result);
+        }
     }
     
     
