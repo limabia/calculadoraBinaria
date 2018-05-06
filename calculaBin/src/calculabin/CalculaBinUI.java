@@ -37,6 +37,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
     // limpa a memoria da calculadora
     private void limpaMemoria() {
         tela.setText("");
+        telaBin.setText("");
         num1 = null;
         num2 = null;
         operacao = null;
@@ -78,17 +79,20 @@ public class CalculaBinUI extends javax.swing.JFrame {
                     default:
                         resultado = num2;
                 }
-                tela.setText(resultado.paraStringDecimal());
             } else {
                 resultado = num2;
             }
-
+            
+            tela.setText(resultado.paraStringDecimal());
+            telaBin.setText(resultado.paraStringBinario());
+            
             num1 = resultado;
             num2 = null;
             operacao = null;
         } catch (IllegalArgumentException e) {
             limpaMemoria();
             tela.setText("ERRO");
+            telaBin.setText("");
         }
 
         clear = true;
@@ -111,20 +115,22 @@ public class CalculaBinUI extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tela = new javax.swing.JTextPane();
-        tres = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        telaBin = new javax.swing.JTextPane();
         um = new javax.swing.JButton();
         dois = new javax.swing.JButton();
-        igual = new javax.swing.JButton();
-        soma = new javax.swing.JButton();
-        cinco = new javax.swing.JButton();
+        tres = new javax.swing.JButton();
         quatro = new javax.swing.JButton();
+        cinco = new javax.swing.JButton();
         sete = new javax.swing.JButton();
-        zero = new javax.swing.JButton();
         seis = new javax.swing.JButton();
         oito = new javax.swing.JButton();
         nove = new javax.swing.JButton();
+        zero = new javax.swing.JButton();
+        igual = new javax.swing.JButton();
         virgula = new javax.swing.JButton();
         start = new javax.swing.JButton();
+        soma = new javax.swing.JButton();
         subtracao = new javax.swing.JButton();
         multiplicacao = new javax.swing.JButton();
         divisao = new javax.swing.JButton();
@@ -143,12 +149,9 @@ public class CalculaBinUI extends javax.swing.JFrame {
         tela.setEditable(false);
         jScrollPane1.setViewportView(tela);
 
-        tres.setText("3");
-        tres.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tresMouseClicked(evt);
-            }
-        });
+        telaBin.setEditable(false);
+        telaBin.setFocusable(false);
+        jScrollPane2.setViewportView(telaBin);
 
         um.setText("1");
         um.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,24 +167,10 @@ public class CalculaBinUI extends javax.swing.JFrame {
             }
         });
 
-        igual.setText("=");
-        igual.addMouseListener(new java.awt.event.MouseAdapter() {
+        tres.setText("3");
+        tres.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                igualMouseClicked(evt);
-            }
-        });
-
-        soma.setText("+");
-        soma.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                somaMouseClicked(evt);
-            }
-        });
-
-        cinco.setText("5");
-        cinco.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cincoMouseClicked(evt);
+                tresMouseClicked(evt);
             }
         });
 
@@ -192,17 +181,17 @@ public class CalculaBinUI extends javax.swing.JFrame {
             }
         });
 
+        cinco.setText("5");
+        cinco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cincoMouseClicked(evt);
+            }
+        });
+
         sete.setText("7");
         sete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 seteMouseClicked(evt);
-            }
-        });
-
-        zero.setText("0");
-        zero.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                zeroMouseClicked(evt);
             }
         });
 
@@ -227,6 +216,20 @@ public class CalculaBinUI extends javax.swing.JFrame {
             }
         });
 
+        zero.setText("0");
+        zero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                zeroMouseClicked(evt);
+            }
+        });
+
+        igual.setText("=");
+        igual.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                igualMouseClicked(evt);
+            }
+        });
+
         virgula.setText(".");
         virgula.setEnabled(false);
         virgula.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -239,6 +242,13 @@ public class CalculaBinUI extends javax.swing.JFrame {
         start.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 startMouseClicked(evt);
+            }
+        });
+
+        soma.setText("+");
+        soma.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                somaMouseClicked(evt);
             }
         });
 
@@ -299,13 +309,9 @@ public class CalculaBinUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(modoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(sete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(oito, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -315,7 +321,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
                                 .addComponent(multiplicacao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(apagar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,14 +353,20 @@ public class CalculaBinUI extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(sair, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                                     .addComponent(igual, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                                    .addComponent(sinalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 12, Short.MAX_VALUE))))
+                                    .addComponent(sinalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(modoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(modoButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -491,16 +503,10 @@ public class CalculaBinUI extends javax.swing.JFrame {
     }//GEN-LAST:event_modoButtonActionPerformed
 
     private void sinalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinalButtonActionPerformed
-        // limpa a tela apos realizar uma operacao
-        if (clear) {
-            tela.setText("");
-            clear = false;
-        }
-
         String texto = tela.getText();
         if (texto.startsWith("-")) {
             tela.setText(texto.substring(1));
-        } else {
+        } else if (!texto.equals("")) {
             tela.setText("-" + texto);
         }
     }//GEN-LAST:event_sinalButtonActionPerformed
@@ -547,6 +553,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
     private javax.swing.JButton dois;
     private javax.swing.JButton igual;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton modoButton;
     private javax.swing.JButton multiplicacao;
     private javax.swing.JButton nove;
@@ -560,6 +567,7 @@ public class CalculaBinUI extends javax.swing.JFrame {
     private javax.swing.JButton start;
     private javax.swing.JButton subtracao;
     private javax.swing.JTextPane tela;
+    private javax.swing.JTextPane telaBin;
     private javax.swing.JButton tres;
     private javax.swing.JButton um;
     private javax.swing.JButton virgula;

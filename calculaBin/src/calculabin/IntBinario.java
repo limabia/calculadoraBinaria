@@ -91,11 +91,13 @@ public class IntBinario implements Numero<IntBinario> {
         return complementoDeDois;
     }
 
+    @Override
     public IntBinario subtracao(IntBinario outro) {
         IntBinario resultadoSub = this.soma(outro.complementoDeDois());
         return resultadoSub;
     }
 
+    @Override
     public IntBinario[] divisao(IntBinario divisor) {
         IntBinario dividendo = this;
 
@@ -140,6 +142,7 @@ public class IntBinario implements Numero<IntBinario> {
         return deslocado;
     }
 
+    @Override
     public IntBinario multiplicacao(IntBinario multiplicador) {
         //utilizando o algoritmo de Booth
         IntBinario resultado = new IntBinario();
@@ -147,7 +150,13 @@ public class IntBinario implements Numero<IntBinario> {
         return resultado;
     }
 
+    @Override
     public String paraStringDecimal() {
         return String.valueOf(this.paraInt());
+    }
+    
+    @Override
+    public String paraStringBinario() {
+        return BinUtils.paraString(this.binario);
     }
 }

@@ -11,4 +11,6 @@ public interface Numero<T extends Numero> {
     T[] divisao(T divisor);
     
     String paraStringDecimal();
+    
+    String paraStringBinario();
 }

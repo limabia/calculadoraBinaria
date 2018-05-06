@@ -10,6 +10,16 @@ public class BinUtils {
         }
         return resultado;
     }
+    
+    public static String paraString(int bin[]) {
+        String val = "";
+        for (int i = 0; i < bin.length; i++) {
+            val = val + bin[i];
+            if (i%4 == 3)
+                val = val + " ";
+        }
+        return val;
+    }
 
     public static void deslocaDireita(int bin[]) {
         for (int i = bin.length - 1; i > 0; i--) {

@@ -77,6 +77,7 @@ public class FloatBinario implements Numero<FloatBinario> {
         return BinUtils.compara(this.binario, outro.binario, 1);
     }
 
+    @Override
     public FloatBinario soma(FloatBinario outro) {
         // primeiro descobre qual possui maior expoente
         FloatBinario maior, menor;
@@ -155,10 +156,12 @@ public class FloatBinario implements Numero<FloatBinario> {
         return oposto;
     }
 
+    @Override
     public FloatBinario subtracao(FloatBinario outro) {
         return this.soma(outro.oposto());
     }
 
+    @Override
     public FloatBinario multiplicacao(FloatBinario outro) {
         FloatBinario resultado = new FloatBinario();
 
@@ -169,7 +172,7 @@ public class FloatBinario implements Numero<FloatBinario> {
         int sinal = this.sinal() ^ outro.sinal();
 
         int exp;
-        int produto[] = new int[bitsMantissa];
+        int produto[];
         int m1[] = new int[numeroDeBits];
         int m2[] = new int[numeroDeBits];
 
@@ -219,6 +222,7 @@ public class FloatBinario implements Numero<FloatBinario> {
         return true;
     }
 
+    @Override
     public FloatBinario[] divisao(FloatBinario divisor) {
         FloatBinario dividendo = this;
 
@@ -285,5 +289,10 @@ public class FloatBinario implements Numero<FloatBinario> {
     @Override
     public String paraStringDecimal() {
         return String.valueOf(this.paraFloat());
+    }
+    
+    @Override
+    public String paraStringBinario() {
+        return BinUtils.paraString(this.binario);
     }
 }
