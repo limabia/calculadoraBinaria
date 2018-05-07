@@ -1,6 +1,9 @@
 package calculabin;
 
-public class CalculaBinUI extends javax.swing.JFrame {
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
 
     // modos da calculadora
     private enum Modo {
@@ -19,6 +22,9 @@ public class CalculaBinUI extends javax.swing.JFrame {
 
     public CalculaBinUI() {
         initComponents();
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
     }
 
     // transforma o valor digitado em int ou em float de acordo com o modo escolhido
@@ -82,10 +88,10 @@ public class CalculaBinUI extends javax.swing.JFrame {
             } else {
                 resultado = num2;
             }
-            
+
             tela.setText(resultado.paraStringDecimal());
             telaBin.setText(resultado.paraStringBinario());
-            
+
             num1 = resultado;
             num2 = null;
             operacao = null;
@@ -545,6 +551,93 @@ public class CalculaBinUI extends javax.swing.JFrame {
         });
     }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        char keyChar = e.getKeyChar();
+
+        switch (keyChar) {
+            case '=':
+                num2 = converteNumero(tela.getText());
+                executa();
+                operacao = null;
+                break;
+            case '+':
+                num2 = converteNumero(tela.getText());
+                executa();
+                operacao = Operacao.SOMA;
+                break;
+            case '-':
+                num2 = converteNumero(tela.getText());
+                executa();
+                operacao = Operacao.SUBTRACAO;
+                break;
+            case '*':
+                num2 = converteNumero(tela.getText());
+                executa();
+                operacao = Operacao.MULTIPLICACAO;
+                break;
+            case '/':
+                num2 = converteNumero(tela.getText());
+                executa();
+                operacao = Operacao.DIVISAO;
+                break;
+            case '0':
+                escreveDigito("0");
+                break;
+            case '1':
+                escreveDigito("1");
+                break;
+            case '2':
+                escreveDigito("2");
+                break;
+            case '3':
+                escreveDigito("3");
+                break;
+            case '4':
+                escreveDigito("4");
+                break;
+            case '5':
+                escreveDigito("5");
+                break;
+            case '6':
+                escreveDigito("6");
+                break;
+            case '7':
+                escreveDigito("7");
+                break;
+            case '8':
+                escreveDigito("8");
+                break;
+            case '9':
+                escreveDigito("9");
+                break;
+            case ',':
+                if (modo ==Modo.FLOAT)
+                    escreveDigito(".");
+                break;
+            case '.':
+                if (modo ==Modo.FLOAT)
+                    escreveDigito(".");
+                break;
+        }
+
+        if (keyCode == KeyEvent.VK_C) {
+            limpaMemoria();
+        } else if (keyCode == KeyEvent.VK_ENTER) {
+            num2 = converteNumero(tela.getText());
+            executa();
+            operacao = null;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton apagar;
