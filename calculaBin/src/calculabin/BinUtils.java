@@ -119,14 +119,6 @@ public class BinUtils {
     public static int compara(int a[], int b[]) {
         return compara(a, b, 0);
     }
-    
-    public static void deslocaDireitaBooth(int bin[]) {
-        // Nao pode zerar o bit inicial
-        for (int i = bin.length - 1; i > 0; i--) {
-            bin[i] = bin[i - 1];
-        }
-    }
-
 
     public static int[] multiplica(int num1[], int num2[]) {
         //utilizando o algoritmo de Booth
@@ -138,8 +130,6 @@ public class BinUtils {
         System.arraycopy(num2, 0, q, 0, numeroDeBits);
         int bitAux = 0;
         
-        // imprime(a);
-        // imprime(q);
         for (int contador = numeroDeBits; contador > 0; contador--) {
             int ultimo = bitAux;
             int penultimo = q[numeroDeBits - 1];
@@ -151,16 +141,16 @@ public class BinUtils {
             }
             
             bitAux = q[numeroDeBits - 1];
-            deslocaDireitaBooth(q);
+            deslocaDireita(q);
             q[0] = a[numeroDeBits - 1];
-            deslocaDireitaBooth(a);
-            imprime(a);
-            imprime(q);
+            deslocaDireita(a);
+            a[0] = bitAux;
         }
-
-        if (soma(a, q)[0] == 1) {
-            return somaUm(soma(a, q));
-        }
-        return soma(a, q);
+        
+        int resultado[] = new int[a.length + q.length];
+        System.arraycopy(a, 0, resultado, 0, a.length);
+        System.arraycopy(q, 0, resultado, a.length, q.length);
+        
+        return resultado;
     }
 }

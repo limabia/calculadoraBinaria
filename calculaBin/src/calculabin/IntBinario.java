@@ -146,7 +146,9 @@ public class IntBinario implements Numero<IntBinario> {
     public IntBinario multiplicacao(IntBinario multiplicador) {
         //utilizando o algoritmo de Booth
         IntBinario resultado = new IntBinario();
-        resultado.binario = BinUtils.multiplica(this.binario, multiplicador.binario);
+        int booth[] = BinUtils.multiplica(this.binario, multiplicador.binario);
+        // ignora overflow
+        System.arraycopy(booth, numeroDeBits, resultado.binario, 0, numeroDeBits);
         return resultado;
     }
 

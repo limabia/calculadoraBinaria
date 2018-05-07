@@ -200,7 +200,7 @@ public class FloatBinario implements Numero<FloatBinario> {
         System.out.println("iMantissa: " + iMantissa);
 
         // copia a mantissa
-        System.arraycopy(produto, iMantissa, resultado.binario, inicioMantissa, bitsMantissa - iMantissa);
+        System.arraycopy(produto, iMantissa, resultado.binario, inicioMantissa, bitsMantissa);
 
         // seta o expoente
         resultado.setExpoente(exp);
