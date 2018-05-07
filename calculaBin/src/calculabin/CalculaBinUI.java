@@ -153,6 +153,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         tela.setEditable(false);
+        tela.setFocusable(false);
         jScrollPane1.setViewportView(tela);
 
         telaBin.setEditable(false);
@@ -160,6 +161,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         jScrollPane2.setViewportView(telaBin);
 
         um.setText("1");
+        um.setFocusable(false);
         um.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 umMouseClicked(evt);
@@ -167,6 +169,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         dois.setText("2");
+        dois.setFocusable(false);
         dois.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 doisMouseClicked(evt);
@@ -174,6 +177,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         tres.setText("3");
+        tres.setFocusable(false);
         tres.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tresMouseClicked(evt);
@@ -181,6 +185,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         quatro.setText("4");
+        quatro.setFocusable(false);
         quatro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 quatroMouseClicked(evt);
@@ -188,6 +193,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         cinco.setText("5");
+        cinco.setFocusable(false);
         cinco.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cincoMouseClicked(evt);
@@ -195,6 +201,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         sete.setText("7");
+        sete.setFocusable(false);
         sete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 seteMouseClicked(evt);
@@ -202,6 +209,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         seis.setText("6");
+        seis.setFocusable(false);
         seis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 seisMouseClicked(evt);
@@ -209,6 +217,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         oito.setText("8");
+        oito.setFocusable(false);
         oito.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 oitoMouseClicked(evt);
@@ -216,6 +225,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         nove.setText("9");
+        nove.setFocusable(false);
         nove.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 noveMouseClicked(evt);
@@ -223,6 +233,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         zero.setText("0");
+        zero.setFocusable(false);
         zero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 zeroMouseClicked(evt);
@@ -230,6 +241,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         igual.setText("=");
+        igual.setFocusable(false);
         igual.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 igualMouseClicked(evt);
@@ -238,6 +250,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
 
         virgula.setText(".");
         virgula.setEnabled(false);
+        virgula.setFocusable(false);
         virgula.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 virgulaMouseClicked(evt);
@@ -245,6 +258,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         start.setText("CE");
+        start.setFocusable(false);
         start.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 startMouseClicked(evt);
@@ -252,6 +266,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         soma.setText("+");
+        soma.setFocusable(false);
         soma.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 somaMouseClicked(evt);
@@ -259,6 +274,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         subtracao.setText("-");
+        subtracao.setFocusable(false);
         subtracao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 subtracaoMouseClicked(evt);
@@ -266,6 +282,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         multiplicacao.setText("*");
+        multiplicacao.setFocusable(false);
         multiplicacao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 multiplicacaoMouseClicked(evt);
@@ -273,6 +290,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         divisao.setText("/");
+        divisao.setFocusable(false);
         divisao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 divisaoMouseClicked(evt);
@@ -280,6 +298,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         apagar.setText("apagar");
+        apagar.setFocusable(false);
         apagar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 apagarMouseClicked(evt);
@@ -287,6 +306,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         sair.setText("sair");
+        sair.setFocusable(false);
         sair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 sairMouseClicked(evt);
@@ -294,6 +314,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         modoButton.setText("Modo Ponto Fluante");
+        modoButton.setFocusable(false);
         modoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modoButtonActionPerformed(evt);
@@ -301,6 +322,7 @@ public class CalculaBinUI extends javax.swing.JFrame implements KeyListener {
         });
 
         sinalButton.setText("+/-");
+        sinalButton.setFocusable(false);
         sinalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sinalButtonActionPerformed(evt);
